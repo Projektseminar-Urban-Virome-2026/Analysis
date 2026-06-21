@@ -8,8 +8,7 @@ import requests
 
 # Define the URLs for the data sources
 source_samplings = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/079c2c4cdaa6ff3324e41ab2916e22ee09861ef1/generated_files"
-source_viruses ="https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/88f5a13d291d8805e075c0d6b3c896373a3ba47d/viruses/generated_files"
-
+source_viruses = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/c797faa94576908554e9cfb3a67b3d8aae836122/viruses/generated_files"
 
 def github_tree_api_url(url):
     """Return the GitHub contents API URL for a /tree/ URL, or None."""
