@@ -7,8 +7,13 @@ from urllib.parse import urlparse
 import requests
 
 # Define the URLs for the data sources
-source_samplings = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/079c2c4cdaa6ff3324e41ab2916e22ee09861ef1/generated_files"
-source_viruses = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/c797faa94576908554e9cfb3a67b3d8aae836122/viruses/generated_files"
+source_samplings = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/90fdd68e04a96c339fa1c914ae95019bd1a16e1c/generated_files"
+source_viruses = "https://github.com/Projektseminar-Urban-Virome-2026/Data_Preparation/tree/90fdd68e04a96c339fa1c914ae95019bd1a16e1c/viruses/generated_files"
+source_samplings_with_virus_information = (
+    f"{source_samplings}/data_with_information_of_viruses/"
+    "samplings_with_information_of_viruses"
+)
+
 
 def github_tree_api_url(url):
     """Return the GitHub contents API URL for a /tree/ URL, or None."""
@@ -83,19 +88,24 @@ def clear_directory(directory):
             os.rmdir(os.path.join(root, name))
 
 
-# Define the directories to save the data
-data_dir = "data"
-samplings_dir = os.path.join(data_dir, "samplings")
-viruses_dir = os.path.join(data_dir, "viruses")
+# Define the directories to save the data. Resolve them relative to this file,
+# so running the script from another working directory does not change them.
+data_dir = Path(__file__).resolve().parent / "data"
+samplings_dir = data_dir / "samplings"
+viruses_dir = data_dir / "viruses"
+samplings_with_virus_information_dir = data_dir / "samplings_with_virus_information"
 
 # Create directories if they don't exist
 os.makedirs(samplings_dir, exist_ok=True)
 os.makedirs(viruses_dir, exist_ok=True)
+os.makedirs(samplings_with_virus_information_dir, exist_ok=True)
 
 # If the data is already downloaded, delete it to ensure we have the latest version
 clear_directory(samplings_dir)
 clear_directory(viruses_dir)
+clear_directory(samplings_with_virus_information_dir)
 
 # Download and extract the data
 download_and_extract(source_samplings, samplings_dir)
 download_and_extract(source_viruses, viruses_dir)
+download_and_extract(source_samplings_with_virus_information, samplings_with_virus_information_dir)
